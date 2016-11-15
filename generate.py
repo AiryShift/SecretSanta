@@ -2,13 +2,14 @@ import random
 from string import ascii_lowercase
 
 VIGENERE_KEY_LENGTH = 5
-ROTATION_VALUE = {letter: value for letter, value in zip(ascii_lowercase, range(len(ascii_lowercase)))}
-names = []
+ROTATION_VALUE = {letter: value for value, letter in enumerate(ascii_lowercase)}
+
 
 def random_pad(text, length):
     while len(text) < length:
         text += random.choice(ascii_lowercase)
     return text
+
 
 def rotate(letter, num):
     # lowercase a-z only
@@ -18,12 +19,14 @@ def rotate(letter, num):
     rotated_letter = chr(number_representation + ord('a'))
     return rotated_letter
 
+
 def vigenere(text, key='santa'):
     result = []
     for index, letter in enumerate(text):
         result.append(rotate(letter, ROTATION_VALUE[key[index % len(key)]]))
     return ''.join(result)
 
+names = []
 with open('names.txt') as f:
     for name in f:
         names.append(name.strip())
